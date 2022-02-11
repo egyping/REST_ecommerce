@@ -1,1 +1,17 @@
-1- code setup
+Base to start from setup
+    pip install Django==4.0.2
+    django-admin startproject project .
+    python manage.py startapp store
+    python manage.py migrate
+
+
+1-BaseCode
+    clone the code from the branch
+    makemigrations 
+    migrate
+    python manage.py createsuperuser 
+    python manage.py runserver
+    install SQLITE EXPLORER
+    use the tool to run the query 1000product.sql
+
+
