@@ -14,4 +14,45 @@ Base to start from setup
     install SQLITE EXPLORER
     use the tool to run the query 1000product.sql
 
+2-BasicREST
+    2.1 install REST Framework
+        pip install djangorestframework==3.12.4
+        add it to the applications > settings 
+        add url 
+    
+    2.2 Response by default Django HttpResponse
+        store > views 
+        store & project  > url
+        http://127.0.0.1:8000/store/products/
+
+    2.3 Response by Rest framework @api_view decorator 
+        store > views 
+    
+    2.4 Product details by @api_view
+        views and URLs
+    
+    2.5 Basic serializer
+        create serializers.py
+        serializers > create serializer for the product model 
+        views > to connect between product model and product serializer
+        http://127.0.0.1:8000/store/products/999/
+        settings > REST_FRAMEWORK to return the numbers intigers not string 
+    
+    2.6 if the product not exist it should response 4.4
+        views > product_detail class > get_object_404 
+        views > product_list class 
+            http://127.0.0.1:8000/store/products/
+
+    2.7 You can write business at the serializer NOT exist in the product model 
+        serializers > 
+            price_with_tax
+    
+    2.8 Rename the serializer field name different than the model 
+        serializers > source= 'unit_price'
+
+    2.9 Serializing Relationships 
+
+
+
+        
 
