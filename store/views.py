@@ -15,7 +15,7 @@ def product_detail(request, id):
     # serializer.data will convert product object to dictionary JSON 
     return Response(serializer.data)
 
-# 2.6 
+# # 2.6 
 @api_view()
 def product_list(request):
     queryset = Product.objects.all()

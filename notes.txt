@@ -51,6 +51,11 @@ Base to start from setup
         serializers > source= 'unit_price'
 
     2.9 Serializing Relationships 
+        getting the related collections of product
+        serializers > create CollectionSerializer + collection field point to the serializer
+
+    2.10 Model serializer
+
 
 
 
