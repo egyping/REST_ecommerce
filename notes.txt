@@ -55,6 +55,41 @@ Base to start from setup
         serializers > create CollectionSerializer + collection field point to the serializer
 
     2.10 Model serializer
+        "It looks like we are repeating ourselves all fields here also exist there"
+        serializer > use serializers.ModelSerializer instead of serializers.Serializer
+        we can include the normal model fields and custom fields too
+        serializer > same for the collection
+
+    2.11 Deserializing Objects POST, PUT , DELETE
+         receive date from the client , create product for example 
+         so at the api_view post method first we need to deserialize the serializer then validate
+         and at the end post the data to the model 
+         1- POST
+            views > 2.11 product_list POST method
+            serialize > make sure to add the missing fields at ProductSerializer 
+            To test the post 
+            {
+                "title": "a",
+                "slug": "a_slug",
+                "unit_price": 22,
+                "collectoin": 7,
+                "inventory": 10
+            }
+        2- PUT
+            views > 2.11 product_detail PUT method
+            To test put 
+            {
+                "title": "b",
+                "slug": "b_slug",
+                "unit_price": 22,
+                "collection": 7,
+                "inventory": 10
+            }   
+        3- DELETE
+            views > 2.11 product_detail DELETE method
+            to test browse to any product and click delete 
+            http://127.0.0.1:8000/store/products/2/
+
 
 
 
