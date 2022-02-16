@@ -89,6 +89,13 @@ Base to start from setup
             views > 2.11 product_detail DELETE method
             to test browse to any product and click delete 
             http://127.0.0.1:8000/store/products/2/
+    
+    2.12 collections 
+            urls > two url setup collection detail and collections list same like product
+            views > collection_list
+            serialize > collection serializer and the custom field 
+            Models > Products model collection field 
+            admin > 
 
 
 

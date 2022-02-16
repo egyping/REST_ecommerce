@@ -5,6 +5,14 @@ from store.models import Collection, Product # 2.5
 
 from decimal import Decimal #2.7
 
+#2.12 collection serialize
+class CollectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Collection
+        fields = ['id', 'title', 'products_count',]
+    # custom field 
+    products_count = serializers.IntegerField()
+
 
 # 2.11 > same like 2.10 just add the missing fields
 class ProductSerializer(serializers.ModelSerializer):

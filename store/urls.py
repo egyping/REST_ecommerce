@@ -8,4 +8,7 @@ urlpatterns = [
     # 2.4 int for integer and str for string
     path('products/<int:id>/', views.product_detail), # 2.4
     
+    # 2.12 collections 
+    path('collections/', views.collection_list),
+    path('collections/<int:pk>/', views.collection_detail),
 ]

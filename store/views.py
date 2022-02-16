@@ -1,14 +1,49 @@
-
 from django.http import HttpResponse # 2.2
 from rest_framework.decorators import api_view # 2.3
 from rest_framework.response import Response # 2.3
-from .models import Product # 2.5 
+from .models import Collection, Product # 2.5 
 from .serializers import ProductSerializer # 2.5 
 
 from django.shortcuts import get_object_or_404 # 2.6
 
 from rest_framework import status # 2.11
 from logging import raiseExceptions # 2.11
+from .serializers import CollectionSerializer # 2.12 
+from django.db.models.aggregates import Count # 2.12
+
+
+#2.12 collcetions list 
+@api_view(['GET', 'POST'])
+def collection_list(request):
+    if request.method == 'GET':
+        # Adding attribute to object while query = annotate
+        queryset = Collection.objects.annotate(products_count=Count('products')).all()
+        serializer = CollectionSerializer(queryset, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = CollectionSerializer(data=request.data)
+        serializer.is_valid(raiseExceptions==True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 2.12 collections detail 
+@api_view(['GET', 'PUT', 'DELETE'])
+def collection_detail(request, pk):
+    collection = get_object_or_404(Collection.objects.annotate(products_count=Count('products')), pk=pk)
+    if request.method == 'GET':
+        serializer = CollectionSerializer(collection)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = CollectionSerializer(collection, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    elif request.method == 'DELETE':
+        if collection.products.count() > 0:
+            return Response({'error': 'Collection cannot be deleted because it includes one or more products.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+        collection.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 # # 2.11 
 @api_view(['GET', 'POST'])
