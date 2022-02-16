@@ -5,6 +5,19 @@ from store.models import Collection, Product # 2.5
 
 from decimal import Decimal #2.7
 
+# 3.2 adding selected related and collection field 
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'unit_price', 'collection', 'price_with_tax',
+                  'slug', 'inventory', 'description',]
+        collection = serializers.StringRelatedField()
+    #custom field
+    price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
+    def calculate_tax(self, product: Product):
+        return product.unit_price * Decimal(1.5)
+    
+    
 #2.12 collection serialize
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,15 +28,15 @@ class CollectionSerializer(serializers.ModelSerializer):
 
 
 # 2.11 > same like 2.10 just add the missing fields
-class ProductSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        fields = ['id', 'title', 'unit_price', 'collection', 'price_with_tax',
-                  'slug', 'inventory', 'description',]
-    #custom field
-    price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
-    def calculate_tax(self, product: Product):
-        return product.unit_price * Decimal(1.5)
+# class ProductSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Product
+#         fields = ['id', 'title', 'unit_price', 'collection', 'price_with_tax',
+#                   'slug', 'inventory', 'description',]
+#     #custom field
+#     price_with_tax = serializers.SerializerMethodField(method_name='calculate_tax')
+#     def calculate_tax(self, product: Product):
+#         return product.unit_price * Decimal(1.5)
     
 # 2.10
 # class ProductSerializer(serializers.ModelSerializer):

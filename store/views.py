@@ -11,6 +11,51 @@ from logging import raiseExceptions # 2.11
 from .serializers import CollectionSerializer # 2.12 
 from django.db.models.aggregates import Count # 2.12
 
+from rest_framework.views import APIView # 3.1
+from rest_framework.generics import ListCreateAPIView # 3.2
+
+# 3.2 Generic API view 
+class ProducList(ListCreateAPIView):
+    def get_queryset(self):
+        return Product.objects.select_related('collection').all()
+
+    def post(self, request):
+        serializer = ProductSerializer(data=request.data)
+        serializer.is_valid(raiseExceptions==True)
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+    
+# 3.1 API view - import 
+# class ProducList(APIView):
+#     def get(self, request):
+#         queryset = Product.objects.all()
+#         serializer = ProductSerializer(queryset, many=True)
+#         return Response(serializer.data)
+#     def post(self, request):
+#         serializer = ProductSerializer(data=request.data)
+#         serializer.is_valid(raiseExceptions==True)
+#         serializer.save()
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+# 3.1 ProductDetail
+class ProductDetail(APIView):
+    def get(self, request, id):
+        product = get_object_or_404(Product, pk=id)
+        serializer = ProductSerializer(product)
+        return Response(serializer.data)
+    def put(self, request, id):
+        product = get_object_or_404(Product, pk=id)
+        serializer = ProductSerializer(product, data=request.data)
+        serializer.save()
+        return Response(serializer.data)
+    def delete(self, request, id):
+        product = get_object_or_404(Product, pk=id)
+        product.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+        
+    
+
 
 #2.12 collcetions list 
 @api_view(['GET', 'POST'])
@@ -49,7 +94,7 @@ def collection_detail(request, pk):
 @api_view(['GET', 'POST'])
 def product_list(request):
     if request.method == 'GET':
-        queryset = Product.objects.all()
+        queryset = Product.objects.select_related('collection').all()
         serializer = ProductSerializer(queryset, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
@@ -91,7 +136,7 @@ def product_detail(request, id):
 # # 2.6 
 # @api_view()
 # def product_list(request):
-#     queryset = Product.objects.all()
+#     queryset = Product.objects.select_related('collection').all()
 #     serializer = ProductSerializer(queryset, many=True)
 #     return Response(serializer.data)
 
