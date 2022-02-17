@@ -13,4 +13,6 @@ urlpatterns = [
     # 2.2
     path('store/', include('store.urls')),
     
+    path('playground/', include('playground.urls')),
+    
 ]
