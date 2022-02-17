@@ -14,7 +14,7 @@ Base to start from setup
     install SQLITE EXPLORER
     use the tool to run the query 1000product.sql
 
-2-BasicREST
+2-BasicREST "Function Views"
     2.1 install REST Framework
         pip install djangorestframework==3.12.4
         add it to the applications > settings 
@@ -96,6 +96,21 @@ Base to start from setup
             serialize > collection serializer and the custom field 
             Models > Products model collection field 
             admin > 
+
+
+
+3- Advanced REST  "CBV Class Based Views"
+    3.1 CBV - APIView
+            Views > import apiview + ProducList
+            urls > url for ProducList
+            Views > ProductDetail 
+            urls > url for ProductDetail
+    
+    3.2 Mixins Generic - ListCreateAPIView ++ serializing relationship 
+        serializer > Product serializer add collection field 
+        views > in all get methods > queryset add select_Related
+        ListCreateAPIView has inside the List - Create Model mixins 
+        views > import list and create mixins 
 
 
 
