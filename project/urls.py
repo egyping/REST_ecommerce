@@ -1,16 +1,14 @@
 from django.contrib import admin
 from django.urls import include, path
 
-urlpatterns = [
 
-    
-    # Admin
+
+admin.site.site_header = 'Storefront Admin'
+admin.site.index_title = 'Admin'
+
+
+urlpatterns = [
     path('admin/', admin.site.urls),
-    
-    # 2.1 Install django rest framework 
-    path('api-auth/', include('rest_framework.urls')),
-    
-    # 2.2
+    path('playground/', include('playground.urls')),
     path('store/', include('store.urls')),
-    
 ]
